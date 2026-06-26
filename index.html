@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>칸토어의 대각선 논법</title>
+  <meta name="description" content="칸토어의 대각선 논법을 스크롤 기반 교육 콘텐츠 형식으로 구조화한 페이지입니다." />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <div class="site-brand">칸토어의 대각선 논법</div>
+      <nav class="page-nav" aria-label="페이지 섹션 이동">
+        <ul>
+          <li><a href="#hero">소개</a></li>
+          <li><a href="#set-size">집합의 크기</a></li>
+          <li><a href="#countable">셀 수 있는 집합</a></li>
+          <li><a href="#uncountable">대각선 논법</a></li>
+          <li><a href="#conclusion">정리</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="content">
+      <section id="hero" class="panel-section hero-page" aria-labelledby="hero-title">
+        <div class="panel-layout hero-layout">
+          <article class="hero-copy">
+            <p class="eyebrow">인터랙티브 수학 콘텐츠</p>
+            <h1 id="hero-title">칸토어의 대각선 논법</h1>
+            <p class="hero-text">무한에도 크기가 다를까요? 스크롤을 따라가며 <strong>셀 수 있는 무한</strong>과 <strong>셀 수 없는 무한</strong>을 단계적으로 이해합니다.</p>
+          </article>
+          <aside class="visual-panel">
+            <div class="hero-visual-card">
+              <div class="hero-visual-header">무한의 두 얼굴</div>
+              <div class="hero-visual-body">
+                <div class="hero-stat">
+                  <strong>셀 수 있는 무한</strong>
+                  <span>자연수, 정수, 유리수</span>
+                </div>
+                <div class="hero-stat">
+                  <strong>셀 수 없는 무한</strong>
+                  <span>실수</span>
+                </div>
+              </div>
+              <div class="hero-visual-footer">대각선 논법을 통해 실수가 목록 밖에 존재함을 보여줍니다.</div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="set-size" class="panel-section scroll-scene" data-steps="5" aria-labelledby="set-size-title">
+        <div class="sticky-stage">
+          <div class="panel-layout">
+            <aside class="visual-panel">
+              <div class="set-demo">
+                <div class="set-column set-a">
+                  <div class="item circle">●</div>
+                  <div class="item circle">●</div>
+                  <div class="item circle">●</div>
+                  <div class="item circle">●</div>
+                </div>
+                <svg class="connections"></svg>
+                <div class="set-column set-b">
+                  <div class="item target">▲</div>
+                  <div class="item target">▲</div>
+                  <div class="item target">▲</div>
+                  <div class="item target">▲</div>
+                </div>
+              </div>
+              <div class="set-conclusion"></div>
+            </aside>
+            <div class="step-copy">
+              <article class="step-text" data-step="0">
+                <h2 id="set-size-title">집합의 크기</h2>
+                <p>집합의 크기는 단순히 눈에 보이는 원소 개수가 아니라, 원소들을 자연수와 대응시키는 일대일 매칭 방식을 통해 근본적으로 이해할 수 있습니다.</p>
+                <p>유한 집합에서는 원소에 <code>1, 2, 3, ..., n</code>과 같이 번호를 붙여 전부 대응시킬 수 있다면 그 집합의 크기는 <code>n</code>입니다.</p>
+              </article>
+              <article class="step-text" data-step="1">
+                <h2>A와 B의 일대일 대응</h2>
+                <p>두 집합의 원소들을 하나씩 빠짐없이 짝을 지어 줄 수 있다면, 두 집합의 크기(기수)는 같다고 정의합니다.</p>
+                <div class="example-block" style="opacity: 1; transform: none; margin: 1rem 0 0 0;">
+                  <p class="example-label">A와 B의 대응</p>
+                  <div class="example-grid">
+                    <div>
+                      <p class="example-title">A</p>
+                      <p class="example-items">● ● ● ●</p>
+                    </div>
+                    <div>
+                      <p class="example-title">B</p>
+                      <p class="example-items">▲ ▲ ▲ ▲</p>
+                    </div>
+                  </div>
+                </div>
+              </article>
+              <article class="step-text" data-step="2">
+                <h2>자연수 번호 매기기</h2>
+                <p>어떤 집합의 원소들이 자연수 <code>1, 2, 3, ..., n</code>과 하나씩 대응된다면, 그 집합의 크기는 <code>n</code>입니다.</p>
+                <div class="note-box" style="opacity: 1; transform: none; margin: 1rem 0 0 0;">
+                  <p>이 일대일 대응 관계를 통해 우리는 무한한 원소를 가진 집합들의 크기도 엄밀하게 비교할 수 있는 수학적 도구를 얻게 됩니다.</p>
+                </div>
+              </article>
+              <article class="step-text" data-step="3">
+                <h2>셀 수 있는 집합이란?</h2>
+                <p>무한 집합이더라도 모든 원소에 빠짐없이 1번, 2번, 3번... 과 같이 자연수 번호를 붙여 나열할 수 있다면 이를 <strong>셀 수 있는 집합(Countable Set)</strong>이라고 부릅니다.</p>
+              </article>
+              <article class="step-text" data-step="4">
+                <p class="transition-text" style="margin-top: 1rem;">이제 같은 생각을 무한 집합으로 확장해 보겠습니다. 자연수, 정수, 유리수가 실제로 어떻게 자연수 번호를 받는지 확인하세요.</p>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="countable" class="panel-section scroll-scene" data-steps="5" aria-labelledby="countable-title">
+        <div class="sticky-stage">
+          <div class="panel-layout">
+            <aside class="visual-panel">
+              <div class="visual-stage">
+                <div class="visual-step" data-step="0">
+                  <div class="countable-intro-card">
+                    <div class="card-header">무한의 크기 비교</div>
+                    <div class="card-body">
+                      <p>자연수, 정수, 유리수... 무한히 많은 원소를 가진 집합들도 일대일 매칭을 통해 크기가 같은지 비교할 수 있습니다.</p>
+                      <p>모든 원소에 빠짐없이 자연수 번호를 붙여 늘어놓을 수 있는 <strong>셀 수 있는 무한</strong>의 대표적인 사례들을 알아봅니다.</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="visual-step" data-step="1">
+                  <div class="countable-panel naturals">
+                    <h3>자연수</h3>
+                    <div class="number-line-viewport">
+                      <div class="number-line-axis">
+                        <div class="number-line-track" aria-hidden="true"></div>
+                        <div class="number-row natural-line">
+                          <div class="point">
+                            <span class="label">1</span>
+                            <span class="tag"></span>
+                          </div>
+                          <div class="point">
+                            <span class="label">2</span>
+                            <span class="tag"></span>
+                          </div>
+                          <div class="point">
+                            <span class="label">3</span>
+                            <span class="tag"></span>
+                          </div>
+                          <div class="point">
+                            <span class="label">4</span>
+                            <span class="tag"></span>
+                          </div>
+                          <div class="point">
+                            <span class="label">5</span>
+                            <span class="tag"></span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="visual-step" data-step="2">
+                  <div class="countable-panel integers">
+                    <h3>정수</h3>
+                    <div class="number-line-viewport">
+                      <div class="number-line-axis">
+                        <div class="number-line-track" aria-hidden="true"></div>
+                        <svg class="integer-order-svg" aria-hidden="true">
+                          <path class="integer-order-path"></path>
+                        </svg>
+                        <div class="number-row integer-line">
+                          <div class="point" data-value="-3"></div>
+                          <div class="point" data-value="-2"></div>
+                          <div class="point" data-value="-1"></div>
+                          <div class="point" data-value="0"></div>
+                          <div class="point" data-value="1"></div>
+                          <div class="point" data-value="2"></div>
+                          <div class="point" data-value="3"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="visual-step" data-step="3">
+                  <div class="countable-panel rationals">
+                    <h3>유리수</h3>
+                    <div class="rational-grid"></div>
+                  </div>
+                  <div class="countable-conclusion">
+                    자연수, 정수, 유리수는 모두 셀 수 있는 집합이다
+                  </div>
+                </div>
+              </div>
+            </aside>
+            <div class="step-copy">
+              <article class="step-text" data-step="0">
+                <h2 id="countable-title">셀 수 있는 집합</h2>
+                <p>무한 집합이더라도 그 집합의 모든 원소에 빠짐없이 자연수 번호를 붙여 나열할 수 있다면 이를 <strong>셀 수 있는 집합(Countable Set)</strong>이라고 정의합니다.</p>
+                <p>무한 집합 중 가장 기본이 되는 자연수, 그리고 정수와 유리수가 어떻게 자연수 번호와 대응될 수 있는지 단계별로 살펴보겠습니다.</p>
+              </article>
+              <article class="step-text" data-step="1">
+                <h3>자연수 (Naturals)</h3>
+                <p>자연수 집합 <code>{1, 2, 3, 4, 5, ...}</code>는 이미 그 자체로 번호가 매겨져 있는 완벽한 기준이 되는 집합입니다.</p>
+                <p>따라서 자연수 집합은 당연히 셀 수 있는 집합이며, 모든 셀 수 있는 집합은 이 자연수 집합과 일대일로 짝을 지을 수 있습니다.</p>
+              </article>
+              <article class="step-text" data-step="2">
+                <h3>정수 (Integers)</h3>
+                <p>정수 집합은 음수 방향과 양수 방향 모두로 끝없이 뻗어 있어 얼핏 보면 자연수보다 2배 더 많아 보입니다.</p>
+                <p>하지만 정수를 <code>0, 1, -1, 2, -2, 3, -3, ...</code>과 같이 지그재그 방향으로 질서 정연하게 늘어놓으면, 모든 정수에 빠짐없이 자연수 순서 번호를 매겨나갈 수 있습니다.</p>
+              </article>
+              <article class="step-text" data-step="3">
+                <h3>유리수 (Rationals)</h3>
+                <p>유리수는 <code>(분모, 분자)</code>의 순서쌍으로 나타내어 2차원 평면 격자 위에 배치할 수 있습니다.</p>
+                <p>대각선 방향으로 훑어가는 경로를 설정하면 유리수를 빠짐없이 순서대로 나열할 수 있습니다. 중복 표현은 건너뛰는 방식으로 정리할 수 있으므로 유리수 전체는 자연수와 대응될 수 있습니다.</p>
+              </article>
+              <article class="step-text" data-step="4">
+                <p class="transition-text" style="margin-top: 1rem;">결론적으로 자연수, 정수, 유리수는 모두 <strong>셀 수 있는 집합</strong>입니다. 이제 다음 섹션에서 대각선 논법을 통해 실수가 왜 셀 수 없는지 확인하세요.</p>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="uncountable" class="panel-section scroll-scene long" data-steps="9" aria-labelledby="uncountable-title">
+        <div class="sticky-stage">
+          <div class="panel-layout">
+            <aside class="visual-panel">
+              <div id="uncountable-animation">
+                <div class="real-list">
+                  <div class="constructed-number-row">
+                    <span class="index">새 수</span>
+                    <span>0</span><span>.</span>
+                    <span class="constructed-digit" data-index="0">4</span>
+                    <span class="constructed-digit" data-index="1">2</span>
+                    <span class="constructed-digit" data-index="2">6</span>
+                    <span class="constructed-digit" data-index="3">2</span>
+                    <span class="constructed-digit" data-index="4">3</span>
+                    <span>...</span>
+                  </div>
+                  <div class="real-row" data-row="0">
+                    <span class="index">1</span>
+                    <span>0</span><span>.</span>
+                    <span class="digit diag">3</span>
+                    <span class="digit">7</span>
+                    <span class="digit">4</span>
+                    <span class="digit">8</span>
+                    <span class="digit">2</span>
+                    <span>...</span>
+                  </div>
+                  <div class="real-row" data-row="1">
+                    <span class="index">2</span>
+                    <span>0</span><span>.</span>
+                    <span class="digit">9</span>
+                    <span class="digit diag">1</span>
+                    <span class="digit">0</span>
+                    <span class="digit">4</span>
+                    <span class="digit">7</span>
+                    <span>...</span>
+                  </div>
+                  <div class="real-row" data-row="2">
+                    <span class="index">3</span>
+                    <span>0</span><span>.</span>
+                    <span class="digit">2</span>
+                    <span class="digit">8</span>
+                    <span class="digit diag">5</span>
+                    <span class="digit">6</span>
+                    <span class="digit">1</span>
+                    <span>...</span>
+                  </div>
+                  <div class="real-row" data-row="3">
+                    <span class="index">4</span>
+                    <span>0</span><span>.</span>
+                    <span class="digit">7</span>
+                    <span class="digit">4</span>
+                    <span class="digit">6</span>
+                    <span class="digit diag">1</span>
+                    <span class="digit">9</span>
+                    <span>...</span>
+                  </div>
+                  <div class="real-row" data-row="4">
+                    <span class="index">5</span>
+                    <span>0</span><span>.</span>
+                    <span class="digit">0</span>
+                    <span class="digit">3</span>
+                    <span class="digit">8</span>
+                    <span class="digit">5</span>
+                    <span class="digit diag">2</span>
+                    <span>...</span>
+                  </div>
+                </div>
+                <div class="new-number-panel">
+                  <div class="title">대각선 숫자를 바꿔 만든 새로운 수</div>
+                  <div id="generatedNumber">0.</div>
+                </div>
+                <div id="comparisonText"></div>
+                <div id="comparisonVisual"></div>
+                <div id="uncountableConclusion"></div>
+              </div>
+            </aside>
+            <div class="step-copy">
+              <article class="step-text" data-step="0">
+                <h2 id="uncountable-title">대각선 논법: 실수를 모두 나열한다고 가정</h2>
+                <p>0과 1 사이의 <strong>모든 실수</strong>를 빠짐없이 나열하여 자연수 번호(1번, 2번, 3번...)를 붙인 완전한 목록이 존재한다고 가정합니다.</p>
+                <div class="example-block" style="opacity: 1; transform: none; margin: 1rem 0 0 0;">
+                  <p class="example-label">가상의 완전한 실수 목록</p>
+                  <ol style="margin: 0; padding-left: 1.2rem; color: var(--muted);">
+                    <li>0.37482...</li>
+                    <li>0.91047...</li>
+                    <li>0.28561...</li>
+                    <li>0.74619...</li>
+                    <li>0.03852...</li>
+                  </ol>
+                </div>
+              </article>
+              <article class="step-text" data-step="1">
+                <h2>대각선 숫자 선택</h2>
+                <p>목록에서 <strong>대각선 방향</strong>으로 숫자를 하나씩 선택합니다.</p>
+                <p>1번 수의 첫째 자리 → 2번 수의 둘째 자리 → 3번 수의 셋째 자리 → ...</p>
+                <p>선택된 대각선 숫자: <code>3, 1, 5, 1, 2, ...</code></p>
+              </article>
+              <article class="step-text" data-step="2">
+                <h2>선택 숫자 변경 규칙</h2>
+                <p>선택한 각 숫자에 <strong>1을 더합니다.</strong> (9이면 0으로 변경)</p>
+                <div class="rule-box" style="opacity: 1; transform: none; margin: 1rem 0 0 0;">
+                  <p>3→<strong>4</strong>, 1→<strong>2</strong>, 5→<strong>6</strong>, 1→<strong>2</strong>, 2→<strong>3</strong>...</p>
+                </div>
+              </article>
+              <article class="step-text" data-step="3">
+                <h2>새로운 수 생성</h2>
+                <p>변경된 숫자들을 순서대로 이어 붙이면 <strong>완전히 새로운 실수</strong>가 만들어집니다.</p>
+                <p>새로운 수: <code>0.42623...</code></p>
+              </article>
+              <article class="step-text" data-step="4">
+                <h2>1번 수와 비교</h2>
+                <p>새 수는 <strong>첫째 자리</strong>에서 1번 수와 다릅니다.</p>
+                <p>새 수의 첫째 자리(<code>4</code>) ≠ 1번 수의 첫째 자리(<code>3</code>)</p>
+                <p>→ 새 수는 1번 수가 아닙니다.</p>
+              </article>
+              <article class="step-text" data-step="5">
+                <h2>2번 수와 비교</h2>
+                <p>새 수는 <strong>둘째 자리</strong>에서 2번 수와 다릅니다.</p>
+                <p>새 수의 둘째 자리(<code>2</code>) ≠ 2번 수의 둘째 자리(<code>1</code>)</p>
+                <p>→ 새 수는 2번 수도 아닙니다.</p>
+              </article>
+              <article class="step-text" data-step="6">
+                <h2>모든 행과 다름</h2>
+                <p>같은 원리로, 새 수의 <strong>N번째 자리</strong>는 항상 N번 수의 N번째 자리와 다릅니다.</p>
+                <p>따라서 새 수는 목록의 <strong>어떤 수와도 일치하지 않습니다.</strong></p>
+              </article>
+              <article class="step-text" data-step="7">
+                <h2>목록 밖의 수 존재</h2>
+                <p>우리가 만든 <code>0.42623...</code>은 분명히 0과 1 사이의 실수이지만, 완전하다고 가정한 목록 <strong>어디에도 들어있지 않습니다.</strong></p>
+                <p>이것은 모순입니다 — 목록이 완전하다면 이 수도 있어야 하기 때문입니다.</p>
+              </article>
+              <article class="step-text" data-step="8">
+                <h2>결론: 실수는 셀 수 없다</h2>
+                <p>어떤 방식으로 나열하더라도, 목록 밖의 실수가 <strong>언제나 만들어집니다.</strong></p>
+                <p>따라서 실수 집합은 자연수와 일대일 대응이 불가능한 <strong>셀 수 없는 집합(Uncountable Set)</strong>입니다.</p>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="conclusion" class="panel-section" aria-labelledby="conclusion-title">
+        <div class="panel-layout">
+          <aside class="visual-panel">
+            <div class="comparison-cards">
+              <div class="summary-card positive">
+                <h3>셀 수 있는 무한</h3>
+                <p>자연수, 정수, 유리수는 모두 자연수와 하나씩 대응할 수 있습니다.</p>
+              </div>
+              <div class="summary-card negative">
+                <h3>셀 수 없는 무한</h3>
+                <p>실수는 대각선 논법으로 어떤 목록에도 포함되지 않는 수가 항상 존재합니다.</p>
+              </div>
+            </div>
+          </aside>
+          <article class="text-panel">
+            <h2 id="conclusion-title">정리</h2>
+            <p>자연수, 정수, 유리수는 자연수와 대응을 만들 수 있으므로 셀 수 있는 무한입니다. 그러나 실수는 어떤 목록으로도 모두 포함할 수 없으므로 셀 수 없는 무한입니다.</p>
+            <ul class="final-summary">
+              <li>셀 수 있는 무한: 자연수, 정수, 유리수</li>
+              <li>셀 수 없는 무한: 실수, 특히 0과 1 사이의 실수</li>
+              <li>최종 결론: 무한은 모두 같은 종류가 아니다.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
