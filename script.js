@@ -214,21 +214,22 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!next) return true;
     return next.type !== 'step' || next.scene !== current.scene || next.stepIndex !== current.stepIndex;
   }
-
   async function startLectureMode() {
     if (lectureMode || speakerMode) return;
+
     lectureMode = true;
     lecturePaused = false;
     manualReadEnabled = false;
 
-    if (!lectureInitialized || lectureItems.length === 0) {
-      currentLectureIndex = 0;
-      lectureItems = buildLectureItems();
-      lectureInitialized = true;
+    const wasFreshStart = !lectureInitialized && lectureItems.length === 0 && currentLectureIndex === 0;
+
+    prepareLectureItemsForPlayback();
+
+    if (wasFreshStart) {
       window.scrollTo({ top: 0, behavior: 'smooth' });
       await wait(800);
       updateAllScenes();
-    } else if (lectureInitialized && lectureItems[currentLectureIndex]) {
+    } else if (lectureItems[currentLectureIndex]) {
       const item = lectureItems[currentLectureIndex];
       if (item.type === 'step') {
         scrollToSceneStep(item.scene, item.stepIndex);
@@ -357,6 +358,31 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  function prepareLectureItemsForPlayback() {
+    const hadItems = lectureItems.length > 0;
+    const savedIndex = currentLectureIndex;
+    if (!hadItems) lectureItems = buildLectureItems();
+    lectureInitialized = true;
+    if (!lectureItems.length) { currentLectureIndex = 0; return; }
+    currentLectureIndex = Math.min(Math.max(savedIndex, 0), lectureItems.length);
+  }
+
+  function findNextLectureIndexAfterSpeakerRange(range) {
+    if (!range) return currentLectureIndex;
+    ensureLectureItems();
+    if (range.type === 'step') {
+      const nextStepIndex = range.stepIndex + 1;
+      const nextStepItemIndex = lectureItems.findIndex(item =>
+        item && item.type === 'step' && item.scene === range.scene && item.stepIndex === nextStepIndex
+      );
+      if (nextStepItemIndex !== -1) return nextStepItemIndex;
+      const afterRangeIndex = lectureItems.findIndex((item, index) => index > range.endIndex);
+      if (afterRangeIndex !== -1) return afterRangeIndex;
+      return lectureItems.length;
+    }
+    return Math.min(range.endIndex + 1, lectureItems.length);
+  }
+
   function findLectureIndexByElement(targetElement) {
     if (!targetElement) return -1;
     ensureLectureItems();
@@ -413,13 +439,15 @@ document.addEventListener("DOMContentLoaded", function () {
     const step = element.closest('.step-text');
     if (step) {
       const scene = step.closest('.scroll-scene');
-      const stepIndex = Number(step.dataset.step || 0);
-      const els = Array.from(step.children).filter(c => ['H2','H3','P','DIV','OL','UL','LI'].includes(c.tagName));
+      const activeStep = scene ? scene.querySelector('.step-text.active') : step;
+      const targetStep = activeStep || step;
+      const stepIndex = Number(targetStep.dataset.step || 0);
+      const els = Array.from(targetStep.children).filter(c => ['H2','H3','P','DIV','OL','UL','LI'].includes(c.tagName));
       if (els.length) {
         const startIndex = findLectureIndexByElement(els[0]);
         const endIndex = findLectureIndexByElement(els[els.length - 1]);
         if (startIndex !== -1 && endIndex !== -1) {
-          return { type: 'step', scene, step, stepIndex, startIndex, endIndex, highlightElement: step };
+          return { type: 'step', scene, step: targetStep, stepIndex, startIndex, endIndex, highlightElement: targetStep };
         }
       }
     }
@@ -448,31 +476,36 @@ document.addEventListener("DOMContentLoaded", function () {
     manualReadEnabled = false;
     const runId = ++speakerRunId;
 
-    let index = range.startIndex;
-    while (speakerMode && index <= range.endIndex && index < lectureItems.length) {
-      const item = lectureItems[index];
-      if (!item || !item.text) { index++; continue; }
-      await playLectureItem(item);
-      if (!speakerMode || speakerRunId !== runId) break;
-      index++;
-    }
-
-    if (speakerRunId !== runId) {
-      speakerMode = false;
-      return;
-    }
-
-    if (speakerMode && range.type === 'step') {
-      await finishStepAnimation(range.scene, range.stepIndex, SPEAKER_STEP_FINISH_DURATION);
-    }
-
-    speakerMode = false;
-    currentLectureIndex = Math.min(range.endIndex + 1, lectureItems.length);
+    currentLectureIndex = Math.min(Math.max(range.startIndex, 0), lectureItems.length);
     lectureInitialized = true;
     lecturePaused = true;
 
-    setTimeout(() => { manualReadEnabled = true; }, 500);
+    let index = range.startIndex;
+    let completed = true;
 
+    while (speakerMode && speakerRunId === runId && index <= range.endIndex && index < lectureItems.length) {
+      const item = lectureItems[index];
+      if (!item || !item.text) { index++; continue; }
+      currentLectureIndex = Math.min(Math.max(index, 0), lectureItems.length);
+      await playLectureItem(item);
+      if (!speakerMode || speakerRunId !== runId) { completed = false; break; }
+      currentLectureIndex = Math.min(Math.max(index + 1, 0), lectureItems.length);
+      index++;
+    }
+
+    if (completed && speakerMode && speakerRunId === runId && range.type === 'step') {
+      await finishStepAnimation(range.scene, range.stepIndex, SPEAKER_STEP_FINISH_DURATION);
+      if (!speakerMode || speakerRunId !== runId) completed = false;
+    }
+
+    if (speakerRunId !== runId) { speakerMode = false; return; }
+
+    if (completed) {
+      currentLectureIndex = Math.min(Math.max(findNextLectureIndexAfterSpeakerRange(range), 0), lectureItems.length);
+    }
+
+    speakerMode = false;
+    setTimeout(() => { if (speakerRunId === runId) manualReadEnabled = true; }, 500);
     const btn = document.querySelector('[data-cmd="lecture-stop"], [data-cmd="scroll"]');
     if (btn) {
       btn.textContent = '▶';
